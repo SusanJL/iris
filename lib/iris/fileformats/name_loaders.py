@@ -162,11 +162,10 @@ def _build_lat_lon_for_NAME_timeseries(column_headings):
     the provided column_headings dictionary.
 
     """
-    pattern = re.compile(r"\-?[0-9]*\.[0-9]*")
     new_Xlocation_column_header = []
     for t in column_headings["X"]:
         if "Lat-Long" in t:
-            matches = pattern.search(t)
+            matches = t.strip('Lat-Long').split('=')[-1])
             new_Xlocation_column_header.append(float(matches.group(0)))
         else:
             new_Xlocation_column_header.append(t)
@@ -178,7 +177,7 @@ def _build_lat_lon_for_NAME_timeseries(column_headings):
     new_Ylocation_column_header = []
     for t in column_headings["Y"]:
         if "Lat-Long" in t:
-            matches = pattern.search(t)
+            matches = t.strip('Lat-Long').split('=')[-1])
             new_Ylocation_column_header.append(float(matches.group(0)))
         else:
             new_Ylocation_column_header.append(t)
@@ -389,6 +388,7 @@ def _cf_height_from_name(z_coord, lower_bound=None, upper_bound=None):
         standard_name=standard_name,
         long_name=long_name,
         bounds=bounds,
+        attributes={"positive": "up"}
     )
 
     return coord
@@ -501,6 +501,8 @@ def _generate_cubes(
                     )
                 if coord.name == "height" or coord.name == "altitude":
                     icoord.long_name = long_name
+                if coord.name in ["height", "altitude", "flight_level"]:
+                    icoord.attributes["positive"] = "up"
                 if (
                     coord.name == "time"
                     and "Av or Int period" in field_headings
