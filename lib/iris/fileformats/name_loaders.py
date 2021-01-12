@@ -165,8 +165,8 @@ def _build_lat_lon_for_NAME_timeseries(column_headings):
     new_Xlocation_column_header = []
     for t in column_headings["X"]:
         if "Lat-Long" in t:
-            matches = t.strip('Lat-Long').split('=')[-1])
-            new_Xlocation_column_header.append(float(matches.group(0)))
+            matches = t.strip('Lat-Long').split('=')[-1]
+            new_Xlocation_column_header.append(float(matches))
         else:
             new_Xlocation_column_header.append(t)
     column_headings["X"] = new_Xlocation_column_header
@@ -177,8 +177,8 @@ def _build_lat_lon_for_NAME_timeseries(column_headings):
     new_Ylocation_column_header = []
     for t in column_headings["Y"]:
         if "Lat-Long" in t:
-            matches = t.strip('Lat-Long').split('=')[-1])
-            new_Ylocation_column_header.append(float(matches.group(0)))
+            matches = t.strip('Lat-Long').split('=')[-1]
+            new_Ylocation_column_header.append(float(matches))
         else:
             new_Ylocation_column_header.append(t)
     column_headings["Y"] = new_Ylocation_column_header
